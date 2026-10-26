@@ -1,0 +1,153 @@
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: #f1f5f9;
+    color: #1e293b;
+}
+
+.container {
+    max-width: 1200px;
+    margin: auto;
+    padding: 24px;
+}
+
+header {
+    background: #12a87b;
+    color: white;
+    padding: 30px;
+    border-radius: 14px;
+    margin-bottom: 24px;
+}
+
+header h1 {
+    margin: 0 0 10px;
+}
+
+.stats {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 16px;
+    margin-bottom: 24px;
+}
+
+.card, .panel {
+    background: white;
+    border-radius: 12px;
+    padding: 22px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+}
+
+.card h3 {
+    font-size: 14px;
+    color: #64748b;
+}
+
+.card h2 {
+    font-size: 28px;
+    color: #d8391d;
+}
+
+.panel {
+    margin-bottom: 24px;
+}
+
+.chart-container {
+    height: 350px;
+}
+
+input {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #cbd5e1;
+    border-radius: 8px;
+    margin-bottom: 12px;
+}
+
+.form-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+}
+
+button, .back-link {
+    display: inline-block;
+    padding: 12px 18px;
+    border: none;
+    border-radius: 8px;
+    background: #06860c;
+    color: white;
+    cursor: pointer;
+    text-decoration: none;
+}
+
+button:hover, .back-link:hover {
+    background: #1d4ed8;
+}
+
+.table-container {
+    overflow-x: auto;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+th, td {
+    padding: 12px;
+    text-align: left;
+    border-bottom: 1px solid #e2e8f0;
+}
+
+th {
+    background: #eff6ff;
+}
+
+.inline-form {
+    display: inline;
+}
+
+.delete-btn {
+    background: #dc2626;
+    padding: 7px 10px;
+    margin-left: 8px;
+}
+
+.delete-btn:hover {
+    background: #b91c1c;
+}
+
+.message {
+    background: #dbeafe;
+    padding: 14px;
+    border-radius: 8px;
+}
+
+.back-link {
+    margin-top: 12px;
+}
+
+@media (max-width: 800px) {
+    .stats {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .form-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 480px) {
+    .stats {
+        grid-template-columns: 1fr;
+    }
+
+    .container {
+        padding: 12px;
+    }
+}
