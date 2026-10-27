@@ -1,15 +1,5 @@
 [
   {
-    "id": 1,
-    "name": "Yusuf Fatima",
-    "mathematics": 76,
-    "english": 85,
-    "science": 86,
-    "computer": 91,
-    "gender": "Male"
-  },
-
-  {
     "id": 2,
     "name": "Divine Rajia",
     "mathematics": 98,
@@ -17,6 +7,32 @@
     "science": 78,
     "computer": 96,
     "gender": "Female"
-  }
+  },
+  {
+    "id": 3,
+    "name": "mr JOS3",
+    "mathematics": 100,
+    "english": 100,
+    "science": 1,
+    "computer": 40,
+    "gender": "Male"
+  },
+  {
+    "id": 4,
+    "name": "Easy",
+    "mathematics": 100,
+    "english": 100,
+    "science": 1,
+    "computer": 40,
+    "gender": "Male"
+  },
+  {
+ "id": 3,
+    "name": "mr JOS3",
+    "mathematics": 100,
+    "english": 100,
+    "science": 1,
+    "computer": 40,
+    "gender": "Male"}
 ]
 

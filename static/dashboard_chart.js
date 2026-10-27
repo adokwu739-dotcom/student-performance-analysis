@@ -19,7 +19,7 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     }
 
-    function renderChart(canvasId, errorId, datasetLabel, colors) {
+    function renderChart(canvasId, errorId, datasetLabel, colors, indexAxis = "x") {
         const canvas = document.getElementById(canvasId);
         if (!canvas) {
             showChartError(errorId, "The chart canvas could not be found.");
@@ -49,8 +49,9 @@ document.addEventListener("DOMContentLoaded", function () {
             options: {
                 responsive: true,
                 maintainAspectRatio: false,
+                indexAxis: indexAxis,
                 scales: {
-                    y: {
+                    [indexAxis === "y" ? "x" : "y"]: {
                         beginAtZero: true,
                         max: 100
                     }
@@ -92,6 +93,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 "rgb(255, 99, 132)",
                 "rgb(54, 162, 235)"
             ]
-        }
+        },
+        "y"
     );
 });
