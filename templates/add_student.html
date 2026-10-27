@@ -1,0 +1,57 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <header class="page-header">
+        <h1>{{ "Edit Student" if student else "Add Student" }}</h1>
+    </header>
+
+    {% for message in get_flashed_messages() %}
+        <p class="message">{{ message }}</p>
+    {% endfor %}
+
+    <section class="panel">
+        <h2>Student Details</h2>
+        <form
+            action="{{ url_for('update_student_record', student_id=student.id) if student else url_for('create_student') }}"
+            method="POST">
+            <label for="name">Student Name</label>
+            <input
+                type="text"
+                id="name"
+                name="name"
+                placeholder="Enter student name"
+                maxlength="100"
+                value="{{ student.name if student else '' }}"
+                required>
+
+            <label for="gender">Gender</label>
+            <select id="gender" name="gender" required>
+                <option value="">Select gender</option>
+                <option value="Not specified" {% if student and student.gender == "Not specified" %}selected{% endif %}>Not specified</option>
+                <option value="Female" {% if student and student.gender == "Female" %}selected{% endif %}>Female</option>
+                <option value="Male" {% if student and student.gender == "Male" %}selected{% endif %}>Male</option>
+            </select>
+
+            <div class="form-grid">
+                <div>
+                    <label for="mathematics">Mathematics</label>
+                    <input type="number" id="mathematics" name="mathematics" placeholder="0 - 100" min="0" max="100" value="{{ student.mathematics if student else '' }}" required>
+                </div>
+                <div>
+                    <label for="english">English</label>
+                    <input type="number" id="english" name="english" placeholder="0 - 100" min="0" max="100" value="{{ student.english if student else '' }}" required>
+                </div>
+                <div>
+                    <label for="science">Science</label>
+                    <input type="number" id="science" name="science" placeholder="0 - 100" min="0" max="100" value="{{ student.science if student else '' }}" required>
+                </div>
+                <div>
+                    <label for="computer">Computer Studies</label>
+                    <input type="number" id="computer" name="computer" placeholder="0 - 100" min="0" max="100" value="{{ student.computer if student else '' }}" required>
+                </div>
+            </div>
+
+            <button type="submit">{{ "Save Changes" if student else "Add Student" }}</button>
+        </form>
+    </section>
+{% endblock %}

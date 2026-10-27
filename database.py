@@ -1,82 +1,106 @@
+import json
+import os
+import tempfile
+from pathlib import Path
 
-import sqlite3
-
-DATABASE = "students.db"
-
-STUDENTS = [
-    ("Maria Adams", 88, 76, 91, 72),
-    ("Joshua Israel", 94, 89, 97, 91),
-    ("Williams Atubu", 67, 72, 58, 64),
-    ("Samuel Adamu", 45, 58, 52, 61),
-    ("Inyang Emmanuel", 79, 84, 73, 88),
-    ("Fatima Ezekiel", 91, 95, 88, 86),
-    ("George Raphael", 55, 48, 62, 51),
-    ("Samuel Akoji", 82, 91, 79, 84)
-]
+DATA_FILE = Path(__file__).resolve().parent / "data.json"
 
 
-def connect():
-    connection = sqlite3.connect(DATABASE)
-    connection.row_factory = sqlite3.Row
-    return connection
+def _read_students():
+    with DATA_FILE.open(encoding="utf-8") as data_file:
+        students = json.load(data_file)
+
+    if not isinstance(students, list):
+        raise ValueError(f"{DATA_FILE} must contain a JSON array of students.")
+
+    return students
 
 
-def init_db():
-    with connect() as connection:
-        connection.execute("""
-            CREATE TABLE IF NOT EXISTS students (
-                id INTEGER PRIMARY KEY AUTOINCREMENT,
-                name TEXT NOT NULL,
-                mathematics INTEGER NOT NULL,
-                english INTEGER NOT NULL,
-                science INTEGER NOT NULL,
-                computer INTEGER NOT NULL
-            )
-        """)
+def _write_students(students):
+    temporary_path = None
+    try:
+        with tempfile.NamedTemporaryFile(
+            mode="w",
+            encoding="utf-8",
+            dir=DATA_FILE.parent,
+            delete=False
+        ) as data_file:
+            temporary_path = Path(data_file.name)
+            json.dump(students, data_file, indent=2, ensure_ascii=False)
+            data_file.write("\n")
 
-        count = connection.execute(
-            "SELECT COUNT(*) FROM students"
-        ).fetchone()[0]
+        os.replace(temporary_path, DATA_FILE)
+    finally:
+        if temporary_path is not None and temporary_path.exists():
+            temporary_path.unlink()
 
-        if count == 0:
-            connection.executemany("""
-                INSERT INTO students
-                (name, mathematics, english, science, computer)
-                VALUES (?, ?, ?, ?, ?)
-            """, STUDENTS)
+
+def init_data():
+    try:
+        with DATA_FILE.open("x", encoding="utf-8") as data_file:
+            json.dump([], data_file)
+            data_file.write("\n")
+    except FileExistsError:
+        pass
+
+    _read_students()
 
 
 def get_students():
-    with connect() as connection:
-        rows = connection.execute(
-            "SELECT * FROM students ORDER BY id"
-        ).fetchall()
-
-        return [dict(row) for row in rows]
+    return _read_students()
 
 
 def get_student(student_id):
-    with connect() as connection:
-        row = connection.execute(
-            "SELECT * FROM students WHERE id = ?",
-            (student_id,)
-        ).fetchone()
-
-        return dict(row) if row else None
+    return next(
+        (student for student in _read_students() if student["id"] == student_id),
+        None
+    )
 
 
-def add_student(name, mathematics, english, science, computer):
-    with connect() as connection:
-        connection.execute("""
-            INSERT INTO students
-            (name, mathematics, english, science, computer)
-            VALUES (?, ?, ?, ?, ?)
-        """, (name, mathematics, english, science, computer))
+def add_student(name, mathematics, english, science, computer, gender):
+    students = _read_students()
+    student = {
+        "id": max((record["id"] for record in students), default=0) + 1,
+        "name": name,
+        "mathematics": mathematics,
+        "english": english,
+        "science": science,
+        "computer": computer,
+        "gender": gender
+    }
+    students.append(student)
+    _write_students(students)
+    return student
+
+
+def update_student(student_id, name, mathematics, english, science, computer, gender):
+    students = _read_students()
+    student = next(
+        (record for record in students if record["id"] == student_id),
+        None
+    )
+    if student is None:
+        return False
+
+    student.update({
+        "name": name,
+        "mathematics": mathematics,
+        "english": english,
+        "science": science,
+        "computer": computer,
+        "gender": gender
+    })
+    _write_students(students)
+    return True
 
 
 def delete_student(student_id):
-    with connect() as connection:
-        connection.execute(
-            "DELETE FROM students WHERE id = ?",
-            (student_id,)
-        )
+    students = _read_students()
+    remaining_students = [
+        student for student in students if student["id"] != student_id
+    ]
+    if len(remaining_students) == len(students):
+        return False
+
+    _write_students(remaining_students)
+    return True

@@ -1,0 +1,22 @@
+[
+  {
+    "id": 1,
+    "name": "Yusuf Fatima",
+    "mathematics": 76,
+    "english": 85,
+    "science": 86,
+    "computer": 91,
+    "gender": "Male"
+  },
+
+  {
+    "id": 2,
+    "name": "Divine Rajia",
+    "mathematics": 99,
+    "english": 96,
+    "science": 78,
+    "computer": 96,
+    "gender": "Female"
+  }
+]
+

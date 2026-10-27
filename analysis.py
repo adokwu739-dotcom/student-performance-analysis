@@ -32,7 +32,12 @@ def analyze(student):
         "total": total,
         "average": round(average, 2),
         "grade": grade_for(average),
-        "status": "Pass" if average >= 50 else "Fail",
+        "status": (
+            "Excellent" if average >= 80
+            else "Very Good" if average >= 70
+            else "Good Pass" if average >= 50
+            else "Fail"
+        ),
         "best_subject": SUBJECTS[scores.index(highest)],
         "weakest_subject": SUBJECTS[scores.index(lowest)]
     }

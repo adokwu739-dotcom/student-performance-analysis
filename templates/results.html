@@ -5,13 +5,14 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Student Report</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link rel="stylesheet" href="/static/style.css">
 </head>
 <body>
     <main class="container">
         <header>
             <h1>Student Performance Report</h1>
             <p>{{ student.name }}</p>
+            <p>{{ student.gender }}</p>
         </header>
 
         <section class="stats">
@@ -47,7 +48,7 @@
             <h3>Weakest Subject: {{ student.weakest_subject }}</h3>
         </section>
 
-        <a class="back-link" href="{{ url_for('home') }}">Back to Dashboard</a>
+        <a class="back-link" href="/">Back to Dashboard</a>
     </main>
 </body>
 </html>

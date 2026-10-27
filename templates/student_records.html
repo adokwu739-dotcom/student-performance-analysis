@@ -1,0 +1,73 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <header class="page-header">
+        <h1>Student Records</h1>
+        <p>Manage student details and view calculated performance.</p>
+    </header>
+
+    {% for message in get_flashed_messages() %}
+        <p class="message">{{ message }}</p>
+    {% endfor %}
+
+    <section class="panel" id="student-records">
+        <div class="section-heading">
+            <h2>Student Records</h2>
+            <a class="button-link" href="{{ url_for('add_student') }}">Add Student</a>
+        </div>
+        {% if students %}
+            <div class="table-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Gender</th>
+                            <th>Math</th>
+                            <th>English</th>
+                            <th>Science</th>
+                            <th>Computer</th>
+                            <th>Average</th>
+                            <th>Grade</th>
+                            <th>Status</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for student in students %}
+                            <tr>
+                                <td>{{ student.name }}</td>
+                                <td>{{ student.gender }}</td>
+                                <td>{{ student.mathematics }}</td>
+                                <td>{{ student.english }}</td>
+                                <td>{{ student.science }}</td>
+                                <td>{{ student.computer }}</td>
+                                <td>{{ student.average }}%</td>
+                                <td>{{ student.grade }}</td>
+                                <td>
+                                    <span class="status-badge status-{{ student.status | lower | replace(' ', '-') }}">
+                                        {{ student.status }}
+                                    </span>
+                                </td>
+                                <td>
+                                    <div class="actions-cell">
+                                        <a class="view-link" href="{{ url_for('student_report', student_id=student.id) }}">View</a>
+                                        <a class="view-link" href="{{ url_for('edit_student', student_id=student.id) }}">Edit</a>
+                                        <form
+                                            class="inline-form"
+                                            action="{{ url_for('remove_student', student_id=student.id) }}"
+                                            method="POST"
+                                            onsubmit="return confirm('Delete this student record?');">
+                                            <button class="delete-btn" type="submit">Delete</button>
+                                        </form>
+                                    </div>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        {% else %}
+            <p class="empty-state">No student records yet. <a href="{{ url_for('add_student') }}">Add the first student</a>.</p>
+        {% endif %}
+    </section>
+{% endblock %}
