@@ -13,7 +13,7 @@
     <section class="panel" id="student-records">
         <div class="section-heading">
             <h2>Student Records</h2>
-            <a class="button-link" href="{{ url_for('add_student') }}">Add Student</a>
+            <a class="button-link" href="{{ url_for('students.add_student') }}">Add Student</a>
         </div>
         {% if students %}
             <div class="table-container">
@@ -50,11 +50,11 @@
                                 </td>
                                 <td>
                                     <div class="actions-cell">
-                                        <a class="view-link" href="{{ url_for('student_report', student_id=student.id) }}">View</a>
-                                        <a class="view-link" href="{{ url_for('edit_student', student_id=student.id) }}">Edit</a>
+                                        <a class="view-link" href="{{ url_for('students.student_report', student_id=student.id) }}">View</a>
+                                        <a class="view-link" href="{{ url_for('students.edit_student', student_id=student.id) }}">Edit</a>
                                         <form
                                             class="inline-form"
-                                            action="{{ url_for('remove_student', student_id=student.id) }}"
+                                            action="{{ url_for('students.remove_student', student_id=student.id) }}"
                                             method="POST"
                                             onsubmit="return confirm('Delete this student record?');">
                                             <button class="delete-btn" type="submit">Delete</button>
@@ -67,7 +67,7 @@
                 </table>
             </div>
         {% else %}
-            <p class="empty-state">No student records yet. <a href="{{ url_for('add_student') }}">Add the first student</a>.</p>
+            <p class="empty-state">No student records yet. <a href="{{ url_for('students.add_student') }}">Add the first student</a>.</p>
         {% endif %}
     </section>
 {% endblock %}

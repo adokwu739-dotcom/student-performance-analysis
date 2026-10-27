@@ -12,7 +12,7 @@
     <section class="panel">
         <h2>Student Details</h2>
         <form
-            action="{{ url_for('update_student_record', student_id=student.id) if student else url_for('create_student') }}"
+            action="{{ url_for('students.update_student_record', student_id=student.id) if student else url_for('students.create_student') }}"
             method="POST">
             <label for="name">Student Name</label>
             <input
