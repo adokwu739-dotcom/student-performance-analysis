@@ -1,14 +1,5 @@
 [
   {
-    "id": 2,
-    "name": "Divine Rajia",
-    "mathematics": 98,
-    "english": 96,
-    "science": 78,
-    "computer": 96,
-    "gender": "Female"
-  },
-  {
     "id": 3,
     "name": "mr JOS3",
     "mathematics": 100,
@@ -27,12 +18,21 @@
     "gender": "Male"
   },
   {
- "id": 3,
+    "id": 3,
     "name": "mr JOS3",
     "mathematics": 100,
     "english": 100,
     "science": 1,
     "computer": 40,
-    "gender": "Male"}
+    "gender": "Male"
+  },
+  {
+    "id": 5,
+    "name": "ben",
+    "mathematics": 80,
+    "english": 75,
+    "science": 55,
+    "computer": 77,
+    "gender": "Male"
+  }
 ]
-
